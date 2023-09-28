@@ -18,10 +18,10 @@ CREATE TABLE authors
     surname varchar(40) NOT NULL
 );
 
-DROP TABLE authors CASCADE;
+DROP TABLE authors;
 DROP TABLE books;
 
-TRUNCATE TABLE authors CASCADE;
+TRUNCATE TABLE authors;
 TRUNCATE TABLE books;
 
 INSERT INTO authors (name, surname)
