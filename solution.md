@@ -70,7 +70,7 @@ VALUES ('The Amazing Gatsby', 1925, 180, 1),
 ```sql
 -- 2. Выбрать название книги, год, ФИО автора отсортированные по году издания по убыванию
 SELECT b.title, b.year, a.name
-from books b
+FROM books b
          JOIN authors a ON b.author_id = a.id
 ORDER BY year DESC;
 ```
@@ -93,8 +93,8 @@ WHERE a.name = 'Jane'
 ```sql
 -- 4. Выбрать книги у которых страниц больше чем среднее количество страниц у всех книг.
 -- Дополнительный столбец для только для демонстрации
-SELECT id, title, year, pages, (SELECT round(avg(pages)) as avg_pages from books)
-from books
+SELECT id, title, year, pages, (SELECT round(avg(pages)) AS avg_pages FROM books)
+FROM books
 WHERE pages > (SELECT avg(pages) FROM books);
 ```
 
@@ -105,13 +105,13 @@ WHERE pages > (SELECT avg(pages) FROM books);
 -- 5. Выбрать 3 самые старые книги и вывести суммарное количество страниц в этих книгах.
 -- 5.1 Три самые старые книги
 SELECT *
-from books
+FROM books
 ORDER BY year
 LIMIT 3;
 
 -- 5.2 Итоговый запрос
 SELECT sum(t.pages)
-from (SELECT pages
+FROM (SELECT pages
       from books
       ORDER BY year
       LIMIT 3) t;
@@ -126,14 +126,14 @@ from (SELECT pages
 -- 6. Написать запрос, изменяющий год издания на текущую дату для одной самой маленькой книги каждого автора.
 -- 6.1 айди автора и количество страниц в его самой малой книге / книгах
 SELECT author_id, min(pages)
-from books
+FROM books
 GROUP BY author_id;
 
 -- 6.2 Итоговый запрос
 UPDATE books b
 SET year = date_part('Year', now())
 FROM (SELECT author_id, min(pages) AS pages
-      from books
+      FROM books
       GROUP BY author_id) t
 WHERE b.author_id = t.author_id
   AND b.pages = t.pages;
@@ -142,10 +142,10 @@ WHERE b.author_id = t.author_id
 Результат первого запроса:</br>
 <img src="files/8.sql.png" width="350" alt=""></br>
 
-До запроса: </br>
+До выполнения итогового запроса: </br>
 <img src="files/9.sql.png" width="600" alt="">
 
-После запроса: </br>
+После выполнения итогового запроса: </br>
 <img src="files/10.sql.png" width="600" alt="">
 
 ---
@@ -153,7 +153,7 @@ WHERE b.author_id = t.author_id
 -- 7. Написать запрос, удаляющий автора, написавшего самую большую книгу.
 -- 7.1 Находим автора с самой большой книгой
 SELECT author_id
-from authors a
+FROM authors a
          JOIN books b ON a.id = b.author_id
 ORDER BY pages DESC
 LIMIT 1;
@@ -164,9 +164,9 @@ LIMIT 1;
 ```sql
 -- 7.2 Находим все его книги
 SELECT *
-from books
+FROM books
 where author_id = (SELECT author_id
-                   from authors a
+                   FROM authors a
                             JOIN books b ON a.id = b.author_id
                    ORDER BY pages DESC
                    LIMIT 1);
@@ -177,16 +177,16 @@ where author_id = (SELECT author_id
 ```sql
 -- 7.3 Удаляем эти книги
 DELETE
-from books
+FROM books
 WHERE id = (SELECT author_id
-            from authors a
+            FROM authors a
                      JOIN books b ON a.id = b.author_id
             ORDER BY pages DESC
             LIMIT 1);
 ```
 
-До выполнения запроса:</br>
+До выполнения итогового запроса:</br>
 <img src="files/13.sql.png" width="650" alt="">
 
-После выполнения запроса:</br>
+После выполнения итогового запроса:</br>
 <img src="files/14.sql.png" width="650" alt="">
