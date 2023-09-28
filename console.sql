@@ -51,7 +51,7 @@ VALUES ('The Amazing Gatsby', 1925, 180, 1),
        ('The Picture of Dorian Grey', 1890, 254, 1);
 
 -- 2. Выбрать название книги, год, ФИО автора отсортированные по году издания по убыванию
-SELECT b.title, b.year, a.name
+SELECT b.title, b.year, a.name || ' ' || a.surname AS fio
 from books b
          JOIN authors a ON b.author_id = a.id
 ORDER BY year DESC;
