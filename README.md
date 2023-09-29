@@ -27,3 +27,7 @@
 ### Примечания
 - ID первичные ключи с автоинкрементом
 - ID автора - внешний ключ на таблицу authors
+
+### Решение задачи
+- [Демонстрация решения](https://github.com/r0ck17/introduction-to-sql/blob/main/solution.md)
+- [Использованные запросы](https://github.com/r0ck17/introduction-to-sql/blob/main/console.sql)
